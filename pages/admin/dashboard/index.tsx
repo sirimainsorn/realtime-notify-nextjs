@@ -4,11 +4,28 @@ import * as React from "react"
 import { handleToastNotifications } from "@/shared/hooks/useToastify"
 
 export default function DashboardPage() {
-  const sendNotification = (message: string) => {
-    // const socket = io("http://localhost:3000")
-    // socket.emit(message)
-    handleToastNotifications(message, null)
-  }
+  const socket = io("http://localhost:3001")
+
+  React.useEffect(() => {
+    // socket.emit("chat-message", { name: "Nest", status: "Approve Success" })
+    socket.on("chat-message", (data) => {
+      console.log(data)
+      handleToastNotifications(data.message.status, null)
+    })
+  }, [socket])
+
+  // const sendNotification = (message: string) => {
+  //   socket.emit("chat-message", { name: "Nest", status: message })
+
+  //   // socket.on("connect", () => {
+  //   //   console.log("Connected")
+  //   // })
+  //   // socket.emit("message", "Hello from client!")
+  //   socket.on("chat-message", (data) => {
+  //     console.log(data)
+  //     handleToastNotifications(data.message.name + " " + data.message.status, null)
+  //   })
+  // }
 
   return (
     <div>
@@ -18,7 +35,7 @@ export default function DashboardPage() {
           className="rounded-md bg-blue-800 px-3 py-2 text-white shadow-md"
           onClick={(e) => {
             e.preventDefault()
-            sendNotification("Approve Success")
+            // sendNotification("Approve Success")
           }}
         >
           Approve
@@ -27,7 +44,7 @@ export default function DashboardPage() {
           className="rounded-md bg-red-800 px-3 py-2 text-white shadow-md"
           onClick={(e) => {
             e.preventDefault()
-            sendNotification("Reject Success")
+            // sendNotification("Reject Success")
           }}
         >
           Reject
