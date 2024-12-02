@@ -8,11 +8,11 @@ export default function DashboardPage() {
 
   React.useEffect(() => {
     // socket.emit("chat-message", { name: "Nest", status: "Approve Success" })
-    socket.on("chat-message", (data) => {
+    socket.on("notification", (data) => {
       console.log(data)
-      handleToastNotifications(data.message.status, null)
+      handleToastNotifications(data.message, null)
     })
-  }, [socket])
+  }, [])
 
   // const sendNotification = (message: string) => {
   //   socket.emit("chat-message", { name: "Nest", status: message })
